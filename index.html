@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Residential GIS Platform | Interactive Layout Dashboard</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="A premium GIS dashboard for exploring residential layouts. View plot availability, facing directions, corner plots, neighborhood profiles, and demand ratings.">
+    
+    <!-- Google Fonts: Plus Jakarta Sans for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-wrapper">
+        
+        <!-- Left Sidebar: Controls & Analytics -->
+        <aside class="sidebar-left glass-card">
+            
+            <!-- Branding Header -->
+            <div class="brand-header">
+                <span class="brand-icon">🏡</span>
+                <div class="brand-info">
+                    <h1>ARYA INFRA</h1>
+                    <span class="brand-tagline">Residential GIS Dashboard</span>
+                </div>
+            </div>
+            
+            <!-- Search & Filters Container -->
+            <section class="section-container" aria-label="Search and Filters">
+                <h2 class="section-title">Plot Search & Filters</h2>
+                
+                <!-- Search Box -->
+                <div class="search-box-wrapper">
+                    <input type="text" id="searchInput" placeholder="Enter Plot Number (e.g. 40)..." autocomplete="off">
+                    <span class="search-icon">🔍</span>
+                    <div id="searchResults" class="search-results-dropdown"></div>
+                </div>
+                
+                <!-- Filters Grid -->
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="filterFacing">Facing</label>
+                        <select id="filterFacing">
+                            <option value="">Any Facing</option>
+                            <option value="East">East</option>
+                            <option value="North">North</option>
+                            <option value="West">West</option>
+                            <option value="South">South</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterCorner">Corner Plot</label>
+                        <select id="filterCorner">
+                            <option value="">Any Type</option>
+                            <option value="yes">Corner Plot</option>
+                            <option value="no">Normal Plot</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus">
+                            <option value="">Any Status</option>
+                            <option value="Available">Available</option>
+                            <option value="Reserved">Reserved</option>
+                            <option value="Sold">Sold</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterDemand">Demand</label>
+                        <select id="filterDemand">
+                            <option value="">Any Demand</option>
+                            <option value="Very High">Very High</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterMinArea">Min Area (sq.ft)</label>
+                        <select id="filterMinArea">
+                            <option value="">No Min</option>
+                            <option value="1500">1500 sq.ft</option>
+                            <option value="1800">1800 sq.ft</option>
+                            <option value="2000">2000 sq.ft</option>
+                            <option value="3000">3000 sq.ft</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterMaxArea">Max Area (sq.ft)</label>
+                        <select id="filterMaxArea">
+                            <option value="">No Max</option>
+                            <option value="1500">1500 sq.ft</option>
+                            <option value="1800">1800 sq.ft</option>
+                            <option value="2000">2000 sq.ft</option>
+                            <option value="3000">3000 sq.ft</option>
+                            <option value="3600">3600 sq.ft</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Analytics Dashboard Panel -->
+            <section class="section-container" aria-label="Analytics Dashboard">
+                <h2 class="section-title">Analytics & Summary</h2>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <span class="stat-number" id="statTotal">-</span>
+                        <span class="stat-label">Total Plots</span>
+                    </div>
+                    
+                    <div class="analytics-card card-available">
+                        <span class="stat-number" id="statAvailable">-</span>
+                        <span class="stat-label">Available Plots</span>
+                    </div>
+                    
+                    <div class="analytics-card card-reserved">
+                        <span class="stat-number" id="statReserved">-</span>
+                        <span class="stat-label">Reserved Plots</span>
+                    </div>
+                    
+                    <div class="analytics-card card-sold">
+                        <span class="stat-number" id="statSold">-</span>
+                        <span class="stat-label">Sold Plots</span>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <span class="stat-number text-small" id="statAvgArea">-</span>
+                        <span class="stat-label">Avg Plot Area</span>
+                    </div>
+                    
+                    <div class="analytics-card card-glow">
+                        <span class="stat-number text-small" id="statHighDemand">-</span>
+                        <span class="stat-label">Highest Demand</span>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <span class="stat-number text-small" id="statPremium">-</span>
+                        <span class="stat-label">Most Premium</span>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <span class="stat-number" id="statEastFacing">-</span>
+                        <span class="stat-label">East Facing</span>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <span class="stat-number" id="statCornerCount">-</span>
+                        <span class="stat-label">Corner Plots</span>
+                    </div>
+                </div>
+            </section>
+        </aside>
+        
+        <!-- Center Panel: The Interactive Map Viewport -->
+        <main class="main-map-area">
+            
+            <!-- Map Controls floating overlay -->
+            <div class="map-controls-dock glass-card">
+                <button id="zoomInBtn" title="Zoom In" aria-label="Zoom In">➕</button>
+                <div class="controls-divider"></div>
+                <button id="zoomOutBtn" title="Zoom Out" aria-label="Zoom Out">➖</button>
+                <div class="controls-divider"></div>
+                <button id="zoomResetBtn" title="Center Layout" aria-label="Center Layout">🏠</button>
+                <div class="controls-divider"></div>
+                <button id="zoomFitBtn" title="Fit to Screen" aria-label="Fit to Screen">🖥️</button>
+                <div class="controls-divider"></div>
+                <button id="fullscreenBtn" title="Toggle Fullscreen" aria-label="Toggle Fullscreen">🔲</button>
+            </div>
+            
+            <!-- Map Legend (Bottom Left overlay) -->
+            <div class="legend-panel glass-card">
+                <span class="legend-title">Legend</span>
+                <div class="legend-items">
+                    <span class="legend-item"><span class="badge badge-available"></span> Available</span>
+                    <span class="legend-item"><span class="badge badge-reserved"></span> Reserved</span>
+                    <span class="legend-item"><span class="badge badge-sold"></span> Sold</span>
+                    <span class="legend-item"><span class="badge badge-selected"></span> Selected</span>
+                </div>
+            </div>
+            
+            <!-- Panning and Zooming Map Canvas -->
+            <div class="map-viewport" id="viewport">
+                <div class="map-canvas" id="mapCanvas">
+                    <!-- Base Map Layout Image -->
+                    <img src="assets/layout.png" id="layoutImage" alt="Residential Layout Plan" draggable="false">
+                    
+                    <!-- Interactive SVG Overlay matching 1448x1086 layout coordinates -->
+                    <svg id="overlay" viewBox="0 0 1448 1086" preserveAspectRatio="xMidYMid meet"></svg>
+                </div>
+            </div>
+            
+            <!-- Floating Map Gestures Hints -->
+            <div class="map-hints glass-card">
+                <span>🖱️ Drag to Pan</span>
+                <span class="hint-divider"></span>
+                <span>📜 Scroll to Zoom</span>
+                <span class="hint-divider"></span>
+                <span>📱 Pinch to Zoom</span>
+            </div>
+            
+            <!-- Comparison Drawer Tray (Bottom Right overlay, toggles dynamically) -->
+            <div id="comparisonTray" class="comparison-tray glass-card">
+                <div class="tray-content">
+                    <span class="tray-title">Compare Plots (<span id="comparisonCount">0</span>)</span>
+                    <div class="tray-buttons">
+                        <button id="btnOpenCompareModal" class="btn-primary">Compare Details</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Right Sidebar: Interactive Plot Details (Slides in) -->
+        <aside id="plotDetailsDrawer" class="sidebar-right glass-card">
+            <button id="closeDrawerBtn" class="close-drawer-btn" title="Close Details" aria-label="Close Details">✕</button>
+            
+            <div class="drawer-header">
+                <h2>Plot Details</h2>
+                <div class="drawer-subtitle">
+                    <span class="plot-number-label">Plot <span id="infoPlotNum">-</span></span>
+                    <span id="infoStatusBadge" class="status-badge">Available</span>
+                </div>
+            </div>
+            
+            <!-- Comparison Action Block -->
+            <div class="compare-action-block">
+                <button id="btnAddToCompare" class="btn-compare-toggle" style="display: none;">Add to Compare</button>
+            </div>
+            
+            <div class="drawer-body">
+                
+                <!-- Specs Table -->
+                <div class="details-section">
+                    <h3>Technical Details</h3>
+                    <div class="details-table">
+                        <div class="table-row">
+                            <span class="row-label">Area (Sq.Ft)</span>
+                            <span class="row-value" id="infoAreaSqft">-</span>
+                        </div>
+                        <div class="table-row">
+                            <span class="row-label">Area (Sq.M)</span>
+                            <span class="row-value" id="infoAreaSqm">-</span>
+                        </div>
+                        <div class="table-row">
+                            <span class="row-label">Dimensions</span>
+                            <span class="row-value" id="infoDims">-</span>
+                        </div>
+                        <div class="table-row">
+                            <span class="row-label">Facing Direction</span>
+                            <span class="row-value" id="infoFacing">-</span>
+                        </div>
+                        <div class="table-row">
+                            <span class="row-label">Plot Type</span>
+                            <span class="row-value" id="infoCorner">-</span>
+                        </div>
+                        <div class="table-row">
+                            <span class="row-label">Road Access Width</span>
+                            <span class="row-value" id="infoRoadWidth">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Smart Demand Index -->
+                <div class="details-section">
+                    <h3>Smart Demand Index</h3>
+                    <div class="demand-card">
+                        <div class="demand-header">
+                            <div class="demand-score-wrapper">
+                                <span class="demand-score-value" id="infoDemandScore">0</span>
+                                <span class="demand-score-max">/100</span>
+                            </div>
+                            <span id="infoDemandLevel" class="demand-level-tag">Medium</span>
+                        </div>
+                        
+                        <!-- Score Bar -->
+                        <div class="demand-gauge-wrapper">
+                            <div id="infoDemandGaugeFill" class="demand-gauge-fill" style="width: 0%;"></div>
+                        </div>
+                        
+                        <p class="demand-description" id="infoDemandExplain">-</p>
+                    </div>
+                </div>
+                
+                <!-- Smart Neighbour Analysis -->
+                <div class="details-section">
+                    <h3>Smart Neighbour Analysis</h3>
+                    <div class="neighbourhood-card">
+                        <div class="score-metric-row">
+                            <span class="metric-label">Neighbourhood Score</span>
+                            <span class="metric-val" id="infoNeighbourhoodScore">- / 10</span>
+                        </div>
+                        
+                        <div class="profile-metric-row">
+                            <span class="metric-label">Community Profile</span>
+                            <span class="metric-val" id="infoCommunityProfile">-</span>
+                        </div>
+                        
+                        <div class="neighbours-list-wrapper">
+                            <span class="list-title">Nearby Occupants:</span>
+                            <ul class="neighbours-list" id="infoNeighboursList">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </aside>
+        
+        <!-- Comparison Overlay Modal -->
+        <div id="comparisonModal" class="modal-overlay">
+            <div class="comparison-modal-card glass-card">
+                <div class="modal-header">
+                    <h2>Plot Comparison Analysis</h2>
+                    <div class="modal-actions">
+                        <button id="btnClearCompare" class="btn-danger-outline">Reset Selection</button>
+                        <button id="closeCompareModal" class="close-modal-btn">✕</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="compare-table">
+                            <thead id="comparisonTableHeader">
+                                <!-- Renders headers dynamically -->
+                            </thead>
+                            <tbody id="comparisonTableBody">
+                                <!-- Renders comparison fields side-by-side dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
